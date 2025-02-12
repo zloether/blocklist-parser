@@ -34,7 +34,7 @@ Downloads and parses simplified block lists
 
 options:
   -h, --help            show this help message and exit
-  -b, --blocklist blocklist
+  -b, --blocklist <name>
                         Name of the blocklist to use
   -l, --list            List supported blocklists
   -u, --url url         URL of blocklist to use

@@ -86,7 +86,7 @@ def __parse_arguments():
     
     # setup argument to store blocklist name
     parser.add_argument('-b', '--blocklist',
-                        metavar='blocklist', action='store',
+                        metavar='<name>', action='store',
                         help='Name of the blocklist to use')
 
     # setup argument to output list of supported blocklists
