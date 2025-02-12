@@ -96,7 +96,7 @@ def __parse_arguments():
     
     # setup argument to store blocklist URL
     parser.add_argument('-u', '--url',
-                        metavar='url', action='store',
+                        metavar='<url>', action='store',
                         help='URL of blocklist to use')
 
 

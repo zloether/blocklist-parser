@@ -28,7 +28,7 @@ Parser for block lists that provides a simplified list of registered domains tha
 ## Usage
 ```
 blocklist-parser.py -h                    
-usage: blocklist-parser.py [-h] [-b blocklist] [-l] [-u url]
+usage: blocklist-parser.py [-h] [-b <name>] [-l] [-u <url>]
 
 Downloads and parses simplified block lists
 
@@ -37,7 +37,7 @@ options:
   -b, --blocklist <name>
                         Name of the blocklist to use
   -l, --list            List supported blocklists
-  -u, --url url         URL of blocklist to use
+  -u, --url <url>         URL of blocklist to use
 ```
 
 
