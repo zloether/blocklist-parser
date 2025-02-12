@@ -10,7 +10,7 @@ Parser for block lists that provides a simplified list of registered domains tha
 
 
 ## Setup
-1. Have python3 installed (instructions)[https://realpython.com/installing-python/]
+1. Have python3 installed [instructions](https://realpython.com/installing-python/)
 1. Clone the repository
     ```
     git clone https://github.com/zloether/blocklist-parser.git
