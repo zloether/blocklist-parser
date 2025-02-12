@@ -1,2 +1,2 @@
 # blocklist-parser
-Parser for blocklistproject lists
+Parser for block lists
