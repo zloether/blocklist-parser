@@ -14,7 +14,7 @@
 # -----------------------------------------------------------------------------
 import argparse
 import requests
-import json
+import tldextract
 
 
 # -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ Downloads and parses simplified block lists
 # functions
 # -----------------------------------------------------------------------------
 
-
+# download list of supported blocklists
 def list_blocklists():
     resp = requests.get(hagezi_dns_blocklists_domains)
     j = resp.json()
@@ -43,7 +43,7 @@ def list_blocklists():
     output = {}
     for item in j:
         name = item['name']
-        url = item['html_url']
+        url = item['download_url']
 
         # make the names friendlier
         name = name.replace('.txt', '') # remove file extension
@@ -54,13 +54,38 @@ def list_blocklists():
     return output
 
 
+# download and parse blocklist
+def download_and_parse_blocklist(url):
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        print(f'Error ({resp.status_code}) connecting to URL: {url}')
+        exit()
+
+    content = []
+    for line in resp.text.splitlines():
+        
+        # skip comment lines
+        if line.startswith('#'):
+            continue
+
+        # extract TLD from line
+        domain = tldextract.extract(line).registered_domain
+        
+        if domain not in content:
+            content.append(domain)
+    
+    return content
+
+    
+
+
 # Configure argument parser
 def __parse_arguments():
     # create parser object
     parser = argparse.ArgumentParser(description=help_description)
     
     # setup argument to store blocklist name
-    parser.add_argument('-b', '--blocklist', nargs=1, default='-',
+    parser.add_argument('-b', '--blocklist',
                         metavar='blocklist', action='store',
                         help='Name of the blocklist to use')
 
@@ -89,7 +114,16 @@ def __run_main():
         list_of_blocklists = list_blocklists()
         list_names = list(list_of_blocklists.keys())
         print('\n'.join(list_names))
-
+    
+    elif args.blocklist:
+        list_of_blocklists = list_blocklists()
+        if args.blocklist in list_of_blocklists.keys():
+            parsed = download_and_parse_blocklist(list_of_blocklists[args.blocklist])
+            print('\n'.join(parsed))
+    
+    elif args.url:
+        parsed = download_and_parse_blocklist(args.url)
+        print('\n'.join(parsed))
 
 
 # -----------------------------------------------------------------------------
