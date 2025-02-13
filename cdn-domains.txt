@@ -1,0 +1,83 @@
+# Akamai
+akadns.net
+akamai.net
+akamaiedge.net
+akamaized.net
+edgesuite.net
+edgekey.net
+
+# Cloudflare
+cloudflare.com
+cloudflare.net
+cf-ipfs.com
+
+# Amazon CloudFront
+cloudfront.net
+cloudfront.com
+cloudfrontaws.com
+
+# Microsoft Azure CDN
+azureedge.net
+msecnd.net
+msocdn.com
+
+# Google Cloud CDN
+googleusercontent.com
+gstatic.com
+googlesyndication.com
+googleapis.com
+ggpht.com
+
+# Fastly
+fastly.net
+fastlylb.net
+
+# StackPath
+stackpathcdn.com
+stackpath.com
+
+# KeyCDN
+kxcdn.com
+keycdn.com
+
+# BunnyCDN
+b-cdn.net
+bunnycdn.com
+
+# Gcore
+gcorelabs.net
+gcorecdn.net
+
+# CDN77
+cdn77.com
+cdn77-static.com
+
+# CacheFly
+cachefly.net
+
+# Alibaba Cloud CDN
+alicdn.com
+
+# Tencent Cloud CDN
+qcloudcdn.com
+
+# Wangsu (ChinaNetCenter)
+wsdvs.com
+
+# Lumen (formerly CenturyLink CDN)
+footprint.net
+
+# Imperva (formerly Incapsula)
+incapsula.com
+
+# Sucuri
+sucuricdn.com
+
+# ArvanCloud
+arvancloud.com
+
+# EdgeCast (formerly Verizon Media CDN)
+edgecastcdn.net
+
+# Qualcomm mobile content delivery services
+qwapi.com
