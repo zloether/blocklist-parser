@@ -12,6 +12,8 @@
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
+import os
+import re
 import argparse
 import requests
 import tldextract
@@ -21,7 +23,7 @@ import tldextract
 # variables
 # -----------------------------------------------------------------------------
 hagezi_dns_blocklists_domains = 'https://api.github.com/repos/hagezi/dns-blocklists/contents/domains'
-
+domain_regex = r'(?<![a-z0-9-])([a-z0-9-]{1,63}\.)+[a-z]{2,63}(?![a-z0-9-])'
 
 # -----------------------------------------------------------------------------
 # help text
@@ -34,6 +36,28 @@ Downloads and parses simplified block lists
 # -----------------------------------------------------------------------------
 # functions
 # -----------------------------------------------------------------------------
+
+# validate domain name
+def is_valid_domain_name(domain_string):
+    validator = re.compile(domain_regex, re.IGNORECASE)
+    
+    if validator.match(domain_string):
+        return True
+    else:
+        return False
+
+
+# read provided file
+def read_file(file_path):
+    if os.path.isfile(file_path):
+        with open(file_path, 'r') as f:
+            content = f.readlines()
+            return content
+    
+    else:
+        print(f'Cannot find file: {file_path}')
+        exit()
+
 
 # download list of supported blocklists
 def list_blocklists():
@@ -54,18 +78,18 @@ def list_blocklists():
     return output
 
 
-# download and parse blocklist
-def download_and_parse_blocklist(url):
-    resp = requests.get(url)
-    if resp.status_code != 200:
-        print(f'Error ({resp.status_code}) connecting to URL: {url}')
-        exit()
-
+# parse provided list of domains
+def parse_blocklist(blocklist):
     content = []
-    for line in resp.text.splitlines():
+    for line in blocklist:
+        line = line.strip()
+
+        # remove leading zero IP
+        if line.startswith('0.0.0.0 '):
+            line = line.replace('0.0.0.0 ', '')
         
-        # skip comment lines
-        if line.startswith('#'):
+        # skip comment lines or blank lines
+        if line.startswith('#') or line == '' or not is_valid_domain_name(line):
             continue
 
         # extract TLD from line
@@ -76,6 +100,24 @@ def download_and_parse_blocklist(url):
     
     return content
 
+
+# download and parse blocklist
+def download_and_parse_blocklist(url):
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        print(f'Error ({resp.status_code}) connecting to URL: {url}')
+        exit()
+
+    content = resp.text.splitlines()
+
+    return parse_blocklist(content)
+
+
+# read and parse blocklist
+def read_and_parse_blocklist(file_path):
+    file_contents = read_file(file_path)
+
+    return parse_blocklist(file_contents)
     
 
 
@@ -88,6 +130,11 @@ def __parse_arguments():
     parser.add_argument('-b', '--blocklist',
                         metavar='<name>', action='store',
                         help='Name of the blocklist to use')
+    
+    # setup argument to store blocklist file
+    parser.add_argument('-f', '--file',
+                        metavar='<file>', action='store',
+                        help='Blocklist file to use')
 
     # setup argument to output list of supported blocklists
     parser.add_argument('-l', '--list', default=None,
@@ -103,12 +150,12 @@ def __parse_arguments():
     # parse the arguments
     args = parser.parse_args()
     
-    return args
+    return args, parser
 
 
 # Main function
 def __run_main():
-    args = __parse_arguments()
+    args, parser = __parse_arguments()
 
     if args.list:
         list_of_blocklists = list_blocklists()
@@ -124,7 +171,13 @@ def __run_main():
     elif args.url:
         parsed = download_and_parse_blocklist(args.url)
         print('\n'.join(parsed))
+    
+    elif args.file:
+        parsed = read_and_parse_blocklist(args.file)
+        print('\n'.join(parsed))
 
+    else:
+        parser.print_help()
 
 # -----------------------------------------------------------------------------
 # Run interactively
