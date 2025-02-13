@@ -10,7 +10,7 @@ Parser for block lists that provides a simplified list of registered domains tha
 
 
 ## Setup
-1. Have python3 installed [instructions](https://realpython.com/installing-python/)
+1. Have python3 installed ([instructions](https://realpython.com/installing-python/))
 1. Clone the repository
     ```
     git clone https://github.com/zloether/blocklist-parser.git
@@ -26,6 +26,7 @@ Parser for block lists that provides a simplified list of registered domains tha
 
 
 ## Usage
+Basic usage:
 ```
 usage: blocklist-parser.py [-h] [-b <name>] [-c <file>] [-f <file>] [-i <file>] [-l] [-u <url>]
 
@@ -42,6 +43,8 @@ options:
   -l, --list            List supported blocklists
   -u, --url <url>       URL of blocklist to use
 ```
+
+The default behavior is to use the included `cdn-domains.txt` list of CDNs when parsing a block list to prevent CDN domains from being shorted.
 
 
 ## Disclaimer
