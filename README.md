@@ -44,7 +44,7 @@ options:
   -u, --url <url>       URL of blocklist to use
 ```
 
-The default behavior is to use the included `cdn-domains.txt` list of CDNs when parsing a block list to prevent CDN domains from being shorted.
+The default behavior is to use the included `cdn-domains.txt` list of CDNs when parsing a block list to prevent CDN domains from being shortened.
 
 
 ## Disclaimer
