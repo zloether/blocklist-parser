@@ -28,6 +28,19 @@ googlesyndication.com
 googleapis.com
 ggpht.com
 
+# Google App Engine (GAE) and related
+appspot.com
+appspotpreview.com
+appspotusercontent.com
+cloudfunctions.net
+cloudproxy.app
+cloudfunctions.net
+firebaseapp.com
+withgoogle.com
+run.app
+cloudproxy.app
+googlecloudapps.com
+
 # Fastly
 fastly.net
 fastlylb.net
